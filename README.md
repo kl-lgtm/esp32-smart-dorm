@@ -121,18 +121,18 @@ pip install requests
 ```text
 smart-dorm-esp32-aiot/
 ├─ README.md
-├─ dorm_main.py      # ESP32 主控程序（传感器采集、状态机、Web Server）
-├─ dorm_bridge.py    # 电脑端桥接程序（调用 Coze、解析指令并下发）
-├─ ssd1306.py        # OLED 显示驱动
-├─ demo.mp4          # 演示视频（可选）
-└─ .gitignore
+├─ .gitignore
+├─ dorm_bridge.py      # 电脑端桥接程序（调用 Coze、解析指令并下发）
+└─ esp32/
+   ├─ dorm_main.py     # ESP32 主控程序（传感器采集、状态机、Web Server）
+   └─ ssd1306.py       # OLED 显示驱动
 ```
 
 ## 配置
 
 ### 1. ESP32 WiFi
 
-在 ESP32 主程序中填写网络信息：
+在 `esp32/dorm_main.py` 中填写网络信息：
 
 ```python
 SSID = "YOUR_WIFI_SSID"
@@ -155,7 +155,7 @@ ESP32_IP = "YOUR_ESP32_IP"
 
 ### 1. 启动 ESP32
 
-将以下文件上传到 ESP32：
+将 `esp32/` 目录下的 `dorm_main.py`、`ssd1306.py` 上传到 ESP32：
 
 ```text
 dorm_main.py
@@ -204,7 +204,7 @@ TEMP_NORMAL = 28
 SECURITY_GRACE_MS = 5000   # 安防离开缓冲（默认 5 秒）
 ```
 
-> 以上参数均为默认值，定义在 `dorm_main.py` 开头，可按实际使用环境修改：
+> 以上参数均为默认值，定义在 `esp32/dorm_main.py` 开头，可按实际使用环境修改：
 > 人体检测保持时间（10 秒）、安防离开缓冲（5 秒）、自动照明双光照阈值、
 > 窗帘温度上下阈值等。
 
@@ -266,14 +266,3 @@ http://ESP32_IP
 
 页面可查看当前模式、温度、光照、PIR、人员、灯光、窗帘和锁定状态，并提供 `AUTO`、`SLEEP`、`SECURITY` 模式控制入口。
 
-## 项目截图
-
-将实际截图放入 `docs/images/`：
-
-```markdown
-![系统整体](docs/images/system_overview.jpg)
-![自动照明](docs/images/auto_lighting.jpg)
-![自适应窗帘](docs/images/adaptive_shade.jpg)
-![安防报警](docs/images/alert_mode.jpg)
-![密码解除](docs/images/keypad_unlock.jpg)
-```
