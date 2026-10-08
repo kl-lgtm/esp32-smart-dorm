@@ -63,9 +63,9 @@ SCENE_SECURITY
 示例：
 
 ```text
-“我要睡觉了” → SLEEP
-“我睡醒了”   → AUTO
-“我要出门了” → SECURITY
+“我要休息了”   → SLEEP
+“我睡醒了”     → AUTO
+“我要去上课了” → SECURITY
 ```
 
 ## 硬件连接
@@ -121,16 +121,11 @@ pip install requests
 ```text
 smart-dorm-esp32-aiot/
 ├─ README.md
-├─ esp32/
-│  ├─ dorm_main.py
-│  └─ ssd1306.py
-├─ pc_bridge/
-│  └─ dorm_bridge.py
-├─ docs/
-│  ├─ system_flow.png
-│  └─ images/
-└─ demo/
-   └─ demo.mp4
+├─ dorm_main.py      # ESP32 主控程序（传感器采集、状态机、Web Server）
+├─ dorm_bridge.py    # 电脑端桥接程序（调用 Coze、解析指令并下发）
+├─ ssd1306.py        # OLED 显示驱动
+├─ demo.mp4          # 演示视频（可选）
+└─ .gitignore
 ```
 
 ## 配置
@@ -180,9 +175,9 @@ python dorm_bridge.py
 ### 3. 测试场景
 
 ```text
-我要睡觉了
+我要休息了
 我睡醒了
-我要出门了
+我要去上课了
 ```
 
 ### 4. 解除安防
@@ -201,20 +196,24 @@ python dorm_bridge.py
 DARK_ON = 2300
 BRIGHT_OFF = 1550
 
-PERSON_HOLD_MS = 30000
+PERSON_HOLD_MS = 10000
 
-TEMP_HIGH = 30.0
-TEMP_NORMAL = 28.0
+TEMP_HIGH = 30
+TEMP_NORMAL = 28
 
-SECURITY_GRACE_MS = 5000
+SECURITY_GRACE_MS = 5000   # 安防离开缓冲（默认 5 秒）
 ```
+
+> 以上参数均为默认值，定义在 `dorm_main.py` 开头，可按实际使用环境修改：
+> 人体检测保持时间（10 秒）、安防离开缓冲（5 秒）、自动照明双光照阈值、
+> 窗帘温度上下阈值等。
 
 - `DARK_ON`：环境较暗时的开灯阈值
 - `BRIGHT_OFF`：环境较亮时的关灯阈值
-- `PERSON_HOLD_MS`：人体状态保持时间
-- `TEMP_HIGH`：高温触发阈值
-- `TEMP_NORMAL`：温度恢复阈值
-- `SECURITY_GRACE_MS`：进入安防后的离开缓冲时间
+- `PERSON_HOLD_MS`：人体状态保持时间（默认 10 秒）
+- `TEMP_HIGH`：高温触发阈值（30℃）
+- `TEMP_NORMAL`：温度恢复阈值（28℃）
+- `SECURITY_GRACE_MS`：进入安防后的离开缓冲时间（默认 5 秒）
 
 ## 核心逻辑
 

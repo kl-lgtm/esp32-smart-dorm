@@ -11,7 +11,7 @@ import ssd1306
 # 1. WiFi
 # ==================================================
 
-SSID = "esp32"
+SSID = "YOUR_WIFI_SSID"
 PASSWORD = "YOUR_WIFI_PASSWORD"  # 演示占位：烧录前改为自己 WiFi 密码
 
 
@@ -28,22 +28,20 @@ BRIGHT_OFF = 1550
 
 
 # PIR人体状态保持时间
-PERSON_HOLD_MS = 30000
+PERSON_HOLD_MS = 10000
 
 
-# 录视频演示参数
-# 正式版原阈值：TEMP_HIGH = 32.0，SECURITY_GRACE_MS = 20000
-# 演示版只缩短等待时间、稍微降低窗帘温度阈值，功能逻辑不变。
-DEMO_MODE = True
+# ============ 主要参数（可按实际环境调整） ============
+# 人体检测与安防缓冲时间、自动照明阈值、窗帘温度阈值等均为默认值，
+# 可根据实际使用环境修改：
+# - PERSON_HOLD_MS     人体状态保持时间，默认 10 秒
+# - SECURITY_GRACE_MS  安防离开缓冲时间，默认 5 秒
+# - DARK_ON/BRIGHT_OFF 自动照明双光照阈值（2300/1550），按环境实测标定调整
+# - TEMP_HIGH/TEMP_NORMAL 窗帘温度上下阈值（30℃/28℃），按季节或空调设定调整
+TEMP_HIGH = 30
+TEMP_NORMAL = 28
 
-if DEMO_MODE:
-    TEMP_HIGH = 35
-    TEMP_NORMAL = 34
-    SECURITY_GRACE_MS = 5000
-else:
-    TEMP_HIGH = 35
-    TEMP_NORMAL = 34
-    SECURITY_GRACE_MS = 20000
+SECURITY_GRACE_MS = 5000
 
 
 # 舵机角度
