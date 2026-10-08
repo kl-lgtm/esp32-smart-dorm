@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 环境与密钥（Coze Token 等敏感信息不入库）
+.env
+*.env
+
+# 课程报告（含个人信息，不公开）
+*.docx
+
+# 系统
+.DS_Store
+Thumbs.db
